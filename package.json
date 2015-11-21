@@ -1,0 +1,24 @@
+{
+  "name": "paintbrush",
+  "version": "1.0.0",
+  "description": "featureless ascii painting",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apla/paintbrush.git"
+  },
+  "keywords": [
+    "color",
+    "ascii",
+    "paint"
+  ],
+  "author": "apla",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/apla/paintbrush/issues"
+  },
+  "homepage": "https://github.com/apla/paintbrush#readme"
+}
