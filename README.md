@@ -11,14 +11,69 @@ Synopsis
 ```javascript
 var paint = require ('paintbrush');
 
-paint ('red', 'red text');
+console.log (paint ('red', 'red text'));
 
-paint ('red+black_bg', 'red text on black');
+console.log (paint ('red+black_bg', 'red text on black'));
 
-paint.redOnBlack = paint.bind ('red+black_bg');
+paint.redOnBlack = paint.bind (paint, 'red+black_bg');
+paint.error      = paint.bind (paint, "red+white_bg");
+paint.path       = paint.cyan.bind (paint);
 
 // actually this is main reason to publish another one module
-paint.redOnBlack ('red text on black');
+console.log (paint.redOnBlack ('red text on black'));
 
+
+// use to discard colors and repaint output from another program
+var httpProcess = child_process.spawn (
+	'/usr/bin/env',
+	['dataflows', 'daemon', '--no-fork'], {
+		stdio: ['pipe', 'pipe', 'pipe']
+	}
+);
+
+httpProcess.stderr.on ('data', function (data) {
+	// paint gray every string chunk without color information
+	// to differentiate between server and client output
+	process.stdout.write (paint.fillString ('gray', data.toString()));
+});
+
+httpProcess.stdout.on ('data', function (data) {
+	if (verbose) {
+		process.stdout.write (paint.fillString ('gray', data.toString()));
+	}
+	if (!ignoreStdout) shellOutput += data;
+	if (!ignoreStdout) {
+		var m = paint.clearString ().match (/http initiator running at http:\/\/([^:]+):([^\/]+)/);
+		if (m) {
+		// …
+		}
+	}
+});
 
 ```
+
+API
+---
+
+``` javascript
+
+var paint = require ('paintbrush');
+
+```
+
+**paint** function allows you to write colored messages. First parameter is a color attribute
+specification. You can use `bold`, `italic`, `underline` and `inverse` modifiers;
+`white`, `grey`, `black`, `blue`, `cyan`, `green`, `magenta`, `red` and `yellow` colors;
+also every color you can use as background, just add `_bg`.
+Any following arguments joined with space character between them.
+
+``` javascript
+console.log (
+	paint ("black+italic+cyan_bg", "will paint black italic text", "on cyan", "background")
+);
+```
+
+**paint.clearString** can be used to discard any color information from string.
+
+**paint.fillString** will fill any color-absent chunks to color you want.
+Take a look into example in [Synopsis](#synopsis) to get idea how it works.
