@@ -43,7 +43,7 @@ for (var colorName in uColors) {
  * @returns {string} monochrome string
  */
 color.clearString = function (str) {
-	return str.replace(/\x1b\[[0-9;]*m/g);
+	return str.replace(/\x1b\[[0-9;]*m/g, "");
 }
 
 /**
