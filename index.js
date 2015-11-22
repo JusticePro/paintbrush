@@ -43,15 +43,17 @@ for (var colorName in uColors) {
  * @param   {string} str colored string
  * @returns {string} monochrome string
  */
-color.clearString = function (str) {
+color.discardColor = function (str) {
 	return str.replace(/\x1b\[[0-9;]*m/g, "");
 }
+
+color.stripColor = color.discardColor;
 
 /**
  * Fill color information for colorless chunks
  * @returns {string} resulting string
  */
-color.fillString = function () {
+color.fillUnpainted = function () {
 	var args = [].slice.apply (arguments);
 	var colorNames = args.shift();
 	var str = args.join (' ');

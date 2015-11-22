@@ -34,16 +34,16 @@ var httpProcess = child_process.spawn (
 httpProcess.stderr.on ('data', function (data) {
 	// paint grey every string chunk without color information
 	// to differentiate between server and client output
-	process.stdout.write (paint.fillString ('grey', data.toString()));
+	process.stdout.write (paint.fillUnpainted ('grey', data.toString()));
 });
 
 httpProcess.stdout.on ('data', function (data) {
 	if (verbose) {
-		process.stdout.write (paint.fillString ('grey', data.toString()));
+		process.stdout.write (paint.fillUnpainted ('grey', data.toString()));
 	}
 	if (!ignoreStdout) shellOutput += data;
 	if (!ignoreStdout) {
-		var m = paint.clearString ().match (/http initiator running at http:\/\/([^:]+):([^\/]+)/);
+		var m = paint.stripColor (shellOutput).match (/http initiator running at http:\/\/([^:]+):([^\/]+)/);
 		if (m) {
 		// …
 		}
@@ -73,7 +73,8 @@ console.log (
 );
 ```
 
-**paint.clearString** can be used to discard any color information from string.
+**paint.stripColor** can be used to discard any color information from string.
+Also you can use **paint.discardColor** as an alias.
 
-**paint.fillString** will fill any color-absent chunks to color you want.
+**paint.fillUnpainted** will fill any color-absent chunks to color you want.
 Take a look into example in [Synopsis](#synopsis) to get idea how it works.
