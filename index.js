@@ -7,8 +7,9 @@ function getColors (colorNames) {
 	var color_attrs = colorNames.constructor === Array ? colorNames : colorNames.split("+");
 	var strPrefix = "", strPostfix = "";
 	for (var i = 0, attr; attr = color_attrs[i]; i++) {
-		strPrefix  += "\033[" + uColors[attr][0] + "m";
-		strPostfix += "\033[" + uColors[attr][1] + "m";
+		if (!uColors[attr]) console.error ("cannot use paint attribute '%s', existing attributes: %s", attr, Object.keys (uColors).join (", "));
+		strPrefix  += "\033[" + (uColors[attr][0] || 39) + "m";
+		strPostfix += "\033[" + (uColors[attr][1] || 39) + "m";
 	}
 	return {start: strPrefix, end: strPostfix};
 }
