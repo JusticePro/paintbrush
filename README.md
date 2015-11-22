@@ -32,14 +32,14 @@ var httpProcess = child_process.spawn (
 );
 
 httpProcess.stderr.on ('data', function (data) {
-	// paint gray every string chunk without color information
+	// paint grey every string chunk without color information
 	// to differentiate between server and client output
-	process.stdout.write (paint.fillString ('gray', data.toString()));
+	process.stdout.write (paint.fillString ('grey', data.toString()));
 });
 
 httpProcess.stdout.on ('data', function (data) {
 	if (verbose) {
-		process.stdout.write (paint.fillString ('gray', data.toString()));
+		process.stdout.write (paint.fillString ('grey', data.toString()));
 	}
 	if (!ignoreStdout) shellOutput += data;
 	if (!ignoreStdout) {
