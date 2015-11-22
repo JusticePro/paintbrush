@@ -1,6 +1,6 @@
 {
   "name": "paintbrush",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "featureless ascii painting",
   "main": "index.js",
   "scripts": {
@@ -15,6 +15,13 @@
     "ascii",
     "paint"
   ],
+  "devDependencies": {
+    "mocha": "*",
+    "istanbul": "*"
+  },
+  "scripts": {
+    "test": "/usr/bin/env istanbul cover _mocha -- -R list"
+  },
   "author": "apla",
   "license": "MIT",
   "bugs": {
