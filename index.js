@@ -1,5 +1,8 @@
 var util    = require ('util');
-var uColors = util.inspect.colors;
+var uColors = {};
+for (var uColor in util.inspect.colors) {
+	uColors[uColor] = [util.inspect.colors[uColor][0], util.inspect.colors[uColor][1]];
+}
 
 var isNode = typeof process !== 'undefined'; // && process.argv[0].lastIndexOf ("node") === process.argv[0].length - 4)
 
