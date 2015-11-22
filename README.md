@@ -1,6 +1,10 @@
 Paintbrush
 ==========
 
+[![build](https://travis-ci.org/apla/paintbrush.svg)](https://travis-ci.org/apla/paintbrush)
+[![NPM Version](http://img.shields.io/npm/v/paintbrush.svg?style=flat)](https://www.npmjs.org/package/paintbrush)
+[![codecov.io](https://codecov.io/github/apla/paintbrush/coverage.svg?branch=master)](https://codecov.io/github/apla/paintbrush?branch=master)
+
 Paintbrush is an ascii coloring tool for nodejs.
 
 It depends only on `util.inspect`.
