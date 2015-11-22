@@ -9,10 +9,11 @@ var isNode = typeof process !== 'undefined'; // && process.argv[0].lastIndexOf (
 function getColors (colorNames) {
 	var color_attrs = colorNames.constructor === Array ? colorNames : colorNames.split("+");
 	var strPrefix = "", strPostfix = "";
-	for (var i = 0, attr; attr = color_attrs[i]; i++) {
+	for (var i = 0; i < color_attrs.length; i++) {
+		var attr = color_attrs[i];
 		if (!uColors[attr]) console.error ("cannot use paint attribute '%s', existing attributes: %s", attr, Object.keys (uColors).join (", "));
-		strPrefix  += "\033[" + (uColors[attr][0] || 39) + "m";
-		strPostfix += "\033[" + (uColors[attr][1] || 39) + "m";
+		strPrefix  +=  uColors[attr] ? "\x1B[" + uColors[attr][0] + "m" : "";
+		strPostfix +=  uColors[attr] ? "\x1B[" + uColors[attr][1] + "m" : "";
 	}
 	return {start: strPrefix, end: strPostfix};
 }
@@ -22,7 +23,7 @@ function color () {
 	var colorNames = args.shift();
 	var str = args.join (' ');
 
-	if (!isNode && !colorNames)
+	if (!isNode || !colorNames)
 		return str;
 
 	var ansiColors = getColors (colorNames);
@@ -34,9 +35,7 @@ function color () {
 for (var colorName in uColors) {
 	// real colors like black and red have 39 as second array element
 	if (uColors[colorName][1] === 39) {
-		if (isNode) {
-			uColors[colorName+'_bg'] = [uColors[colorName][0] + 10, 49];
-		}
+		uColors[colorName+'_bg'] = [uColors[colorName][0] + 10, 49];
 	}
 	color[colorName] = color.bind (color, colorName);
 }
@@ -47,6 +46,7 @@ for (var colorName in uColors) {
  * @returns {string} monochrome string
  */
 color.discardColor = function (str) {
+	if (!str || !str.replace) return str;
 	return str.replace(/\x1b\[[0-9;]*m/g, "");
 }
 
@@ -62,7 +62,7 @@ color.fillUnpainted = function () {
 	var str = args.join (' ');
 	var chunks = str.split (/\x1b\[(?:39|0)m/gm);
 
-	if (!isNode && !colorNames)
+	if (!isNode || !colorNames)
 		return str;
 
 	var result = '';
