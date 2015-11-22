@@ -17,10 +17,11 @@
   ],
   "devDependencies": {
     "mocha": "*",
+    "codecov.io": "*",
     "istanbul": "*"
   },
   "scripts": {
-    "test": "/usr/bin/env istanbul cover _mocha -- -R list"
+    "test": "/usr/bin/env istanbul cover _mocha -- -R list && cat ./coverage/coverage.json | codecov"
   },
   "author": "apla",
   "license": "MIT",
