@@ -35,6 +35,8 @@ describe ('paint test', function () {
 		var ss1 = s1 + paint ('red', s2) + s3;
 		var ss2 = paint ('grey', s1) + paint ('red', s2) + paint ('grey', s3);
 		
+		assert.equal(paint.fillUnpainted (null, s1), s1);
+
 		//var util = require ('util');
 
 		//console.log (util.inspect (paint.fillUnpainted ('grey', ss1)));
